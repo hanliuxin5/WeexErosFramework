@@ -55,11 +55,11 @@ dependencies {
      */
     compile 'com.taobao.android.weex_inspection:protocol:1.1.4.1'
     compile 'com.taobao.android:weex_inspector:0.13.4'
-    compile 'com.taobao.android:weex_inspector:0.13.4'
     compile 'com.squareup.okhttp:okhttp-ws:2.3.0'
     compile 'com.squareup.okhttp3:okhttp:3.8.0'
+    compile 'com.alibaba:fastjson:1.1.68.android'
     compile project(':sdk')
-    compile(name: 'bm_imagepicker', ext: 'aar')
+    compile 'com.lzy.widget:imagepicker:0.6.1'
     compile 'com.journeyapps:zxing-android-embedded:3.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.chrisbanes.photoview:library:1.2.4'
@@ -70,6 +70,7 @@ dependencies {
     compile files('libs/umeng_social_net.jar')
     compile files('libs/umeng_social_api.jar')
     compile files('libs/umeng_social_tool.jar')
+    compile files('libs/GetuiSDK2.9.3.0.jar')
     compile 'com.android.support:multidex:1.0.1'
 
     //bs patch
@@ -84,5 +85,5 @@ dependencies {
 
     //plugin Moudle
     compile project(':ErosPluginAmap')
-//    compile project(':erosplugingt')
+    //    compile project(':erosplugingt')
 }

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.benmu.framework.R;
 import com.benmu.framework.constant.Constant;
+import com.benmu.framework.extend.adapter.GlideImageLoader;
 import com.benmu.framework.http.Api;
 import com.benmu.framework.manager.ManagerFactory;
 import com.benmu.framework.manager.impl.AxiosManager;
@@ -52,7 +53,7 @@ public class DefaultImageAdapter {
         return mInstance;
     }
 
-    public void pickPhoto(final Context context, UploadImageBean bean,int requestCode) {
+    public void pickPhoto(final Context context, UploadImageBean bean, int requestCode) {
         if (!checkPermission(context)) return;
 
         imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
@@ -68,7 +69,7 @@ public class DefaultImageAdapter {
 
     }
 
-    public void pickAvatar(final Context context, UploadImageBean bean,int requestCode) {
+    public void pickAvatar(final Context context, UploadImageBean bean, int requestCode) {
         if (!checkPermission(context)) return;
 
         imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
@@ -97,9 +98,9 @@ public class DefaultImageAdapter {
         PersistentManager persistentManager = ManagerFactory.getManagerService(PersistentManager
                 .class);
         persistentManager.setCacheData(Constant.ImageConstants.UPLOAD_IMAGE_BEAN, bean);
-        if (context instanceof Activity) {
-            imagePicker.takePicture((Activity) context, 1001);
-        }
+        Intent intent = new Intent(context, ImageGridActivity.class);
+        intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+        ((Activity) context).startActivityForResult(intent, 101);
     }
 
     public void UpMultipleImageData(Context context, ArrayList<ImageItem> items, UploadImageBean
@@ -148,25 +149,6 @@ public class DefaultImageAdapter {
         return hasPermisson;
     }
 
-    public class GlideImageLoader implements ImageLoader {
-
-        @Override
-        public void displayImage(Activity activity, String path, ImageView imageView, int width,
-                                 int height) {
-
-            Glide.with(activity)                             //配置上下文
-                    .load(Uri.fromFile(new File(path)))      //设置图片路径(fix #8,文件名包含%符号 无法识别和显示)
-                    .error(R.mipmap.default_image)           //设置错误图片
-                    .placeholder(R.mipmap.default_image)     //设置占位图片
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存全尺寸
-                    .into(imageView);
-        }
-
-        @Override
-        public void clearMemoryCache() {
-
-        }
-    }
 
 }
 
